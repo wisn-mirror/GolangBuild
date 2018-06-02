@@ -1,5 +1,5 @@
 // Size
-package main
+package test
 
 import (
 	"fmt"
