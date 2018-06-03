@@ -6,3 +6,9 @@ byte rune//32位的没有char
 float32 float64 complex64 complex128 
 
 iota自增
+
+
+Fields Split Join
+Contains Index
+ToLower ToUpper
+Trim TrimRight TrimLeft
