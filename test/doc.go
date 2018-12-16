@@ -3,4 +3,4 @@
 /*
 HelloWorld document
 */
-package test
+package main

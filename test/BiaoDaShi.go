@@ -1,5 +1,5 @@
 // BiaoDaShi
-package test
+package main
 
 import (
 	"fmt"

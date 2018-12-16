@@ -1,5 +1,5 @@
 // HelloWorld project main.go
-package test
+package main
 
 //import "time"
 import (
