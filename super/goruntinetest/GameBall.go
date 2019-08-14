@@ -6,7 +6,9 @@ import (
 	"sync"
 	"time"
 )
-
+/**
+没有缓冲区
+*/
 var ch = make(chan int)
 var chSendOnly chan<- int = ch
 var chRecvOnly <-chan int = ch

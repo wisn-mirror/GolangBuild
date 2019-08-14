@@ -1,5 +1,7 @@
 package main
-
+/**
+没有缓冲区
+ */
 import (
 	"fmt"
 	"sync"
