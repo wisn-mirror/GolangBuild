@@ -22,7 +22,7 @@ const (
 	J_4
 )
 
-func VarTest() {
+func main() {
 	fmt.Println("\n**********************")
 	fmt.Println(m_a)
 	fmt.Println(m_b)

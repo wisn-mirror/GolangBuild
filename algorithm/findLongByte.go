@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 func findLong(str string) (int, string) {
 	lastcode:=make(map[rune]int)
@@ -25,8 +28,12 @@ func findLong(str string) (int, string) {
 
 
 func main() {
+	args := os.Args
 	fmt.Println(findLong("abccdefff"))
 	fmt.Println(findLong("中国人人"))
 	fmt.Println(findLong(""))
 	fmt.Println(findLong("a"))
+	fmt.Println(args[0])
+	fmt.Println(args[1])
+	fmt.Println(args[2])
 }
