@@ -13,8 +13,8 @@ func variableInit1()  {
 }
 
 func variableInit2() {
-	var a,b int=11,33
-	var c ,d string="abc" ,"cde"
+	var a,b =11,33
+	var c ,d ="abc" ,"cde"
 	fmt.Println(a,b,c,d)
 }
 
