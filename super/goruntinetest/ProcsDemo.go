@@ -24,16 +24,16 @@ func doAllD() {
 	size:=temp/cpu
 	fmt.Println("start size ",size)
 	starttime:=time.Now().UnixNano()
-	for i := 0; i < cpu; i++ {
+	for i := 0; i <= cpu; i++ {
 		end:=(i+1)*size
 		if end>temp{
-			end=size
+			end=temp
 		}
 		go doSomeD(size*i, end, chD)
-		//fmt.Println("temp:start",start," end," ,end)
+		fmt.Println("slice:start",size*i," end," ,end)
 	}
 	var ResultD int
-	for j := 0; j < cpu; j++ {
+	for j := 0; j <= cpu; j++ {
 		resultTemp:=<-chD
 		ResultD=ResultD+resultTemp
 	}
