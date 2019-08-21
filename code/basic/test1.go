@@ -7,7 +7,40 @@ import (
 
 func main() {
 
+	for i := 0; i < 10; i++ {
+	 done:for j := 0; j < 10; j++ {
+			fmt.Println(i,j)
+			if i*j > 20 {
+				continue done
+			}
+		}
+	}
+	fmt.Println("done")
+}
 
+func gotofun() {
+	for i := 0; i < 10; i++ {
+		for j := 0; j < 10; j++ {
+			if i*j > 200 {
+				goto done
+			}
+		}
+	}
+done:
+	fmt.Println("done")
+	issucess := false
+	for i := 0; i < 10; i++ {
+		for j := 0; j < 10; j++ {
+			if i*j > 200 {
+				issucess = true
+				break
+			}
+		}
+		if issucess {
+			break
+		}
+	}
+	fmt.Println("done")
 }
 
 func switchfun() {
