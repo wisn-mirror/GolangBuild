@@ -1,15 +1,53 @@
 package main
-
 import (
 	"fmt"
 	"time"
 )
 
 func main() {
+}
 
+func sliceInit() {
+	var slicestrlist []string
+	var sliceintlist []int
+	var emptyslice = []int{}
+	fmt.Println(slicestrlist, sliceintlist, emptyslice)
+	//[] [] []
+	fmt.Println(slicestrlist == nil, sliceintlist == nil, emptyslice == nil)
+	//true true false
+	a := make([] int, 3, 5)
+	fmt.Println(a, len(a), cap(a))
+	//[0 0 0] 3 5
+}
+
+func sliceTest1() {
+/*	var a = [3]int{1, 2, 3}
+	b:=a[0:0]
+	fmt.Println("清空切片", b)*/
+	var a = [3]int{1, 2, 3}
+	fmt.Println(a, a[1:2])
+	var test [30]int
+	for i := 0; i < 30; i++ {
+		test[i] = i + 1
+	}
+	fmt.Println(test)
+	//[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]
+	//取区间
+	fmt.Println(test[10:20])
+	//[11 12 13 14 15 16 17 18 19 20]
+	//开始到指定下标
+	fmt.Println(test[:15])
+	//[1 2 3 4 5 6 7 8 9 10 11 12 13 14 15]
+	//中间到结束
+	fmt.Println(test[15:])
+	//[16 17 18 19 20 21 22 23 24 25 26 27 28 29 30]
+}
+
+func continue测试() {
 	for i := 0; i < 10; i++ {
-	 done:for j := 0; j < 10; j++ {
-			fmt.Println(i,j)
+	done:
+		for j := 0; j < 10; j++ {
+			fmt.Println(i, j)
 			if i*j > 20 {
 				continue done
 			}
@@ -141,7 +179,7 @@ func fortest() {
 	}*/
 }
 
-func testifelse() {
+func 分支结构() {
 	count := 3
 	//变量在其实现了变量的功能后，作用范围越小，所造成的问题可能性越小
 	if result := count / 2; result > 2 {
@@ -156,7 +194,7 @@ func testifelse() {
 	}
 }
 
-func arraysInit() {
+func array多维数组Init() {
 	//声明
 	var array1 [2][2]int
 	//初始化
@@ -182,7 +220,7 @@ func arraysInit() {
 	//[[0 0] [0 3]]
 }
 
-func compare() {
+func array比较() {
 	a := [4]int{1, 3, 2, 5}
 	b := [...]int{1, 3, 2, 5}
 	c := [4]int{1, 3, 2, 6}
@@ -211,7 +249,7 @@ func test3(name *string) (int, string) {
 	return 1, *name
 }
 
-func test2() {
+func init2() {
 	a, b := TestReturnValue()
 	fmt.Println(a, b)
 	c, _ := TestReturnValue()
@@ -221,7 +259,7 @@ func TestReturnValue() (int, int) {
 	return 10, 20
 }
 
-func test1() {
+func init1() {
 	name1, name2 := "evey", "wisn"
 	fmt.Println(name1, name2)
 	var a = 2
