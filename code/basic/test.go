@@ -7,6 +7,84 @@ import (
 func main() {
 }
 
+func maneySlice() {
+	slice := [][]int{{20}, {10, 20}}
+	fmt.Println(slice)
+	//[[20] [10 20]]
+	slice[0] = append(slice[0], 33)
+	fmt.Println(slice)
+	//[[20 33] [10 20]]
+}
+
+func deleteSlice() {
+	deleteSlice := []int{1, 2, 3, 4, 5, 6}
+	fmt.Println(deleteSlice)
+	fmt.Println(deleteSlice[2:])
+	//删除前两个
+	fmt.Println(deleteSlice[:len(deleteSlice)-2])
+	//删除后两个
+	index := 2
+	fmt.Println(append(deleteSlice[:index], deleteSlice[index+2:]...))
+	//删除以index开始两个元素
+}
+
+func copySlice() {
+	count := 100
+	resData := make([]int, count)
+	for i := 0; i < count; i++ {
+		resData[i] = i
+	}
+	refData := resData
+	fmt.Printf("resData %p  refData %p\n", resData, refData)
+	//指向的内存地址相同
+	fmt.Println("resData ", resData)
+	fmt.Println("refData", refData)
+	copyData := make([]int, count)
+	fmt.Println("copyData", copyData)
+	copy(copyData, resData)
+	fmt.Println("copyDatad", copyData)
+	resData[0] = -9
+	fmt.Println("refData", refData)
+	fmt.Println("copyData", copyData)
+	for j := 0; j < 3; j++ {
+		copyData[j] = j + 100
+	}
+	fmt.Println("copyData", copyData)
+	fmt.Println("copyData", copyData[1:3])
+	//拷贝的copyData[1:3]，从0开始对应到resData中后续不动
+	copy(resData, copyData[1:3])
+	fmt.Println("refData", refData)
+	fmt.Println("copyData", copyData)
+}
+
+func appendSlice() {
+	/*appendtemp:=[]int{1,2}
+	a:=[]int{3,4}
+	fmt.Println(appendtemp[:1])
+	fmt.Println(append([]int{5,6},appendtemp[:1]...))
+	a=append(a[:1],append([]int{5,6},appendtemp[:1]...)...)
+	fmt.Println(a)*/
+
+	appendtemp:=[]int{2,4,6}
+	var a []int
+	for i:=0;i<10;i++{
+		//添加到切片头部
+		a=append(appendtemp,a...)
+		fmt.Printf("%d,len:%d，cap:%d,%p\n",a,len(a),cap(a),a)
+	}
+	var slice []int
+	fmt.Println(slice)
+	//追加一个元素
+	slice = append(slice, 1)
+	fmt.Println(slice)
+	//追加一个切片, 手动解包
+	slice = append(slice, 2, 3, 4)
+	fmt.Println(slice)
+	//追加一个切片, 切片需要解包
+	slice = append(slice, []int{3, 2}...)
+	fmt.Println(slice)
+}
+
 func sliceInit() {
 	var slicestrlist []string
 	var sliceintlist []int
