@@ -1,10 +1,133 @@
 package main
 import (
+	"bufio"
 	"fmt"
+	"io/ioutil"
+	"os"
+	"sort"
+	"strings"
+	"sync"
 	"time"
 )
 
 func main() {
+
+}
+
+func countFileLine() {
+	//统计文件行重复
+	counts := make(map[string]int)
+	files := os.Args[1:]
+	for error, filename := range files {
+		fmt.Println(filename, error)
+		bytes, e := ioutil.ReadFile(filename)
+		if e != nil {
+			fmt.Println("error", e)
+			continue
+		}
+		for _, line := range strings.Split(string(bytes), "\t") {
+			counts[line]++
+		}
+	}
+	for key, value := range counts {
+		fmt.Println(key, value)
+	}
+}
+
+func countInput() {
+	//统计输入字符次数
+	counts := make(map[string]int)
+	scanner := bufio.NewScanner(os.Stdin)
+	for scanner.Scan() {
+		text := scanner.Text()
+		if strings.ToLower(text) == "exit" {
+			break
+		}
+		counts[text]++
+	}
+	fmt.Println(counts)
+}
+
+func syncMap() {
+	var syncmap sync.Map
+	syncmap.Store(3, "33")
+	syncmap.Store(4, "44")
+	syncmap.Store(3, "343")
+	//重复性，会覆盖
+	syncmap.Store(22, "22")
+	syncmap.Store(44, "44")
+	fmt.Println(syncmap)
+	syncmap.Delete(44)
+	fmt.Println(syncmap)
+	syncmap.Range(func(key, value interface{}) bool {
+		fmt.Println(key, value)
+		return true
+	})
+}
+
+func mapReadWrite() {
+	var maptest = make(map[int]string)
+	go func() {
+		for {
+			//不断写入
+			maptest[1] = "111"
+		}
+	}()
+	go func() {
+		for {
+			//不断读取
+			_ = maptest[1]
+		}
+	}()
+	time.Sleep(time.Second * 3)
+}
+
+func deleteMap() {
+	var testmap = make(map[int]string)
+	testmap[2] = "22"
+	testmap[5] = "55"
+	testmap[4] = "44"
+	testmap[3] = "33"
+	fmt.Println(testmap)
+	delete(testmap, 2)
+	//map[2:22 5:55 4:44 3:33]
+	fmt.Println(testmap)
+	//map[5:55 4:44 3:33]
+	//清空map
+	testmap=make(map[int]string)
+	fmt.Println(testmap)
+}
+
+func rangeMap() {
+	var testmap = make(map[int]string)
+	testmap[2] = "22"
+	testmap[5] = "55"
+	testmap[4] = "44"
+	testmap[3] = "33"
+	var list = make([]int, 0)
+	for key, value := range testmap {
+		fmt.Println(key, value)
+		list = append(list, key)
+	}
+	fmt.Println(list)
+	sort.Ints(list)
+	fmt.Println(list)
+}
+
+func mapinit() {
+	var map1 map[int]string
+	//map1[1]="111"//panic: assignment to entry in nil map
+	map1 = map[int]string{3: "33", 2: "332"}
+	fmt.Println(map1)
+	map2 := make(map[int]string, 10)
+	fmt.Println(map2, len(map2))
+	//0
+	map2[3] = "333"
+	fmt.Println(map2)
+	map3 := make(map[int][]int)
+	map3[1] = make([]int, 2)
+	fmt.Println(map3)
+	//map[1:[0 0]]
 }
 
 func maneySlice() {
