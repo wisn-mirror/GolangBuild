@@ -10,7 +10,10 @@ import (
 	"time"
 )
 
-func main() {
+func Testmain() string {
+	// countInput()
+	fmt.Println("test vscode")
+	return "test"
 
 }
 
