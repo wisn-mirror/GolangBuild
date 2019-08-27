@@ -5,33 +5,119 @@ import (
 	"strings"
 )
 
+const (
+	second=1
+	minute=60*second
+	hour=minute*60
+	day=hour*24
+)
+
+func timeE(seconds int)(secondr int,  minuter int, hourr int) {
+	return seconds,secondr/minute ,secondr/hour
+}
+
 
 func main() {
-	taskStr:=[]string{
+
+
+}
+
+type testinterface interface {
+	testfun(data interface{}) error
+}
+type TestI struct {
+}
+
+func (testinterface *TestI) testfun(data interface{}) error {
+	fmt.Println("testfun",data)
+	return nil
+}
+/**
+接口测试
+*/
+func testInterface() {
+	test := new(TestI)
+	var testinter testinterface
+	testinter = test
+	testinter.testfun("str")
+}
+
+/**
+函数封装
+ */
+func funcMap() {
+	skill := map[string]func(string){
+		"one": func(str string) {
+			fmt.Println(str + "one")
+		},
+		"two": func(str string) {
+			fmt.Println(str + "two")
+		},
+	}
+	if result, ok := skill["one"]; ok {
+		result("heheh")
+	} else {
+		fmt.Println("nil")
+	}
+}
+
+
+func OnClickListener(list []string,fu func(string))  {
+	for _,value:=range list{
+		fu(value+"callback")
+	}
+}
+//函数回调
+func funcCallBack() {
+	list := []string{
+		"str2",
+		"str3",
+		"str4",
+	}
+	OnClickListener(list, func(result string) {
+		fmt.Println(result)
+	})
+}
+/*
+匿名函数赋值
+ */
+func funcNoNameVar() {
+	f := func(str string) string {
+		return str + "1"
+	}
+	result := f("test")
+	fmt.Println(result)
+}
+/*
+函数链式调用
+ */
+func funcLinkExcute() {
+	taskStr := []string{
 		"gor testLinkFunc a ",
 		" gor testLinkFunc B",
 		"gor testLinkFunc c ",
 		" gor testLinkFunc d",
 	}
-	funcList:=[]func( string)string{
+	funcList := []func(string) string{
+		strings.TrimSpace,
 		removeStr,
 		strings.TrimSpace,
 		strings.ToUpper,
 	}
-	excute(taskStr,funcList)
-	for _,str:=range taskStr{
+	excute(taskStr, funcList)
+	for _, str := range taskStr {
 		fmt.Println(str)
 	}
 }
 func excute(list []string,listfunc []func(string)string)  {
-	for index,value :=range list{
+	for index,_ :=range list{
 		for _,funcStr:=range listfunc{
-			list[index]=funcStr(value)
+			list[index]=funcStr(list[index])
 		}
 	}
 }
 func removeStr(str string) string {
-	return str
+	return strings.TrimPrefix(str,"gor")
 }
 
 /**
