@@ -31,12 +31,12 @@ func  ex(ch chan int, i int)  {
 }
 
 func main() {
-	ch:=make(chan int,45)
+	ch:=make(chan int,50)
 	starttime:=time.Now().UnixNano()
-	for i:=0;i<45;i++{
+	for i:=0;i<50;i++{
 		go ex(ch,i)
 	}
-	for i:=0;i<45;i++{
+	for i:=0;i<50;i++{
 		fmt.Println(<-ch)
 	}
 	endtime:=time.Now().UnixNano()
