@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"strings"
+	"time"
 )
 
 const (
@@ -16,10 +17,31 @@ func timeE(seconds int)(secondr int,  minuter int, hourr int) {
 	return seconds,secondr/minute ,secondr/hour
 }
 
+func  feibona(n int) (result int ) {
+	if n<=1{
+		return 1
+	}else{
+		return feibona(n-1)+feibona(n-2)
+	}
+}
+
+func  ex(ch chan int, i int)  {
+	fmt.Println(i, feibona(i))
+	ch<-i
+}
 
 func main() {
-
-
+	ch:=make(chan int,45)
+	starttime:=time.Now().UnixNano()
+	for i:=0;i<45;i++{
+		go ex(ch,i)
+	}
+	for i:=0;i<45;i++{
+		fmt.Println(<-ch)
+	}
+	endtime:=time.Now().UnixNano()
+	timesum:=(endtime-starttime)/1e6
+	fmt.Println("用时毫秒：",timesum)
 }
 
 type testinterface interface {
