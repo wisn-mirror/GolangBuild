@@ -2,9 +2,201 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"runtime"
 	"strings"
 	"time"
 )
+
+func Adder() func(int )int  {
+	var x int
+	return func(detail int) int {
+		x=x+detail
+		return  x
+	}
+}
+
+func main() {
+	var add=Adder()
+	fmt.Println(add(3))
+	fmt.Println(add(4))
+	fmt.Println(add(5))
+	//3
+	//7
+	//12
+}
+
+func protectedRun( entry func() )  {
+	defer func() {
+		error:=recover()
+		switch error.(type) {
+		case runtime.Error:
+			fmt.Println(error)
+		default:
+			fmt.Println("nil")
+		}
+	}()
+	entry()
+}
+func PanicExcute()  {
+	protectedRun(func() {
+		fmt.Println("PanicExcute1")
+		panic("A")
+	})
+	protectedRun(func() {
+		fmt.Println("PanicExcute2")
+		var b *int
+		*b=2
+
+	})
+	fmt.Println("PanicExcute ")
+}
+
+func testTimeSum() {
+	start := time.Now()
+	// todo
+	end := time.Now()
+	timesum := end.Sub(start)
+	fmt.Printf("%s\n", timesum)
+}
+
+func testpainc() {
+	defer fmt.Println("defer1")
+	defer fmt.Println("defer2")
+	fmt.Println("panictest start")
+	panic("panic")
+	fmt.Println("panictest end")
+	/*panictest start
+	defer2
+	defer1
+	panic: panic	*/
+}
+
+
+type PassError struct {
+	filename string
+	line int
+}
+
+func (e *PassError)Error()string  {
+	return fmt.Sprintf("%s:%d ",e.filename,e.line)
+}
+func newPassError(filename string,line int)error  {
+	return &PassError{filename,line}
+}
+
+func customerError() {
+	e := newPassError("hello.go", 2)
+	fmt.Println(e)
+}
+
+
+func closeFuction()  {
+	str:="helloworld"
+	testfunc:=func(){
+		str="hello"
+	}
+	fmt.Println(str)//helloworld
+	testfunc()
+	fmt.Println(str)//hello
+}
+//用于生成器
+func playGen(name string)func()(string,int)  {
+	hello:=222
+	return func() (s string, i int) {
+		return name,hello
+	}
+}
+func testGen() {
+	playGenerator := playGen("wisn")
+	name, age := playGenerator()
+	fmt.Println(name, age)
+}
+
+func testMannyArg() {
+	//mannyArg1(3,6,4,0,3,2)
+	//mannyArg2(3,"hello",3.3,)
+	printtypeValue(3, "hello", 3.3, true)
+	manyArg3(3, "hello", 3.3, true)
+}
+//可变参数的多重传递
+func manyArg3(arg ...interface{})  {
+	mannyArg2(arg...)
+}
+//内部实现就是一个切片
+func mannyArg1(arg ...int ){
+	for _,value:=range arg{
+		fmt.Println(value)
+	}
+}
+//任意参数
+func mannyArg2(arg ...interface{} ){
+	for _,value:=range arg{
+		fmt.Println(value)
+	}
+}
+//打印字段的类型
+func printtypeValue(list ...interface{})  {
+	for index,value:=range list{
+		var typeStr string
+		switch value.(type){
+		case bool:
+			typeStr="bool"
+		case int:
+			typeStr="int"
+		case string:
+			typeStr="string"
+		}
+		fmt.Println(index,value,typeStr)
+	}
+}
+
+
+
+
+func testDefer() (result int ) {
+	defer fmt.Println(" test defer 1")
+	defer fmt.Println(" test defer 2")
+	defer fmt.Println(" test defer 3")
+	defer fmt.Println(" test defer 4")
+	fmt.Println("excute")
+	return 1
+}
+//excute
+//test defer 4
+//test defer 3
+//test defer 2
+//test defer 1
+
+func getFileSize(filename string)int64  {
+	f,error:=os.Open(filename)
+	if error!=nil{
+		return 0
+	}
+	fileinfo ,infoerror:=f.Stat()
+	if infoerror!=nil{
+		f.Close()
+		return 0
+	}
+	size :=fileinfo.Size()
+	f.Close()
+	return size
+}
+
+func getFileSizeDefer(filename string)int64  {
+	file,error:=os.Open(filename)
+	if error!=nil{
+		return 0
+	}
+	defer file.Close()
+	info ,infoerror:=file.Stat()
+	if infoerror!=nil{
+		return 0
+	}
+	return info.Size()
+}
+
+
 
 const (
 	second=1
@@ -30,19 +222,21 @@ func  ex(ch chan int, i int)  {
 	ch<-i
 }
 
-func main() {
-	ch:=make(chan int,50)
-	starttime:=time.Now().UnixNano()
-	for i:=0;i<50;i++{
-		go ex(ch,i)
+func testFibonacci() {
+	ch := make(chan int, 50)
+	starttime := time.Now().UnixNano()
+	for i := 0; i < 50; i++ {
+		go ex(ch, i)
 	}
-	for i:=0;i<50;i++{
+	for i := 0; i < 50; i++ {
 		fmt.Println(<-ch)
 	}
-	endtime:=time.Now().UnixNano()
-	timesum:=(endtime-starttime)/1e6
-	fmt.Println("用时毫秒：",timesum)
+	endtime := time.Now().UnixNano()
+	timesum := (endtime - starttime) / 1e6
+	fmt.Println("用时毫秒：", timesum)
 }
+
+
 
 type testinterface interface {
 	testfun(data interface{}) error
