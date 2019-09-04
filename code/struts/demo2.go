@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 
 //构造
@@ -58,7 +60,28 @@ func objectDemo() {
 	fmt.Println(people)
 }
 
-func main() {
+type testint int
+//基本数据类型添加方法
+func (i testint)isZiro() bool {
+	return i==0
 }
+//基本数据类型添加方法
+func (i testint)addAge(target int)int   {
+	return int(i )+ target
+}
+
+func basicTypeAddfun() {
+	var usedInd testint
+	fmt.Println(usedInd.isZiro())
+	usedInd = testint(usedInd.addAge(33))
+	fmt.Println(usedInd)
+	fmt.Println(usedInd.isZiro())
+}
+
+func main() {
+
+
+}
+
 
 
