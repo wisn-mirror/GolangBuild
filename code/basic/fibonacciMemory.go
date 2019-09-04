@@ -6,7 +6,7 @@ import (
 )
 const count=45
 var fibs [count]uint64
-func fibbonacciMermory(i int)(res uint64 )  {
+func fibbonacciMermory(i int)(res uint64  )  {
 	if i>=0&&fibs[i]!=0{
 		res= fibs[i]
 		return

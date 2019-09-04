@@ -17,7 +17,17 @@ func Adder() func(int )int  {
 }
 
 func main() {
-	var add=Adder()
+	for i:=1;i<54;i++{
+		for j:=1;j<54;j++{
+			if i+j+i*j==54{
+				fmt.Println(i,j,i+j)
+			}
+		}
+	}
+}
+
+func funcName() {
+	var add = Adder()
 	fmt.Println(add(3))
 	fmt.Println(add(4))
 	fmt.Println(add(5))
